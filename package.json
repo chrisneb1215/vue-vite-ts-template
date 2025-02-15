@@ -1,0 +1,36 @@
+{
+    "name": "vite-vue-ts-template",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "prebuild": "vite optimize",
+        "build": "vue-tsc -b && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@element-plus/icons-vue": "^2.3.1",
+        "axios": "^1.7.9",
+        "dayjs": "^1.11.13",
+        "element-plus": "^2.9.3",
+        "pinia": "^2.3.1",
+        "vue": "^3.5.13",
+        "vue-router": "^4.5.0"
+    },
+    "devDependencies": {
+        "@iconify-json/ep": "^1.2.2",
+        "@types/node": "^22.13.0",
+        "@vitejs/plugin-vue": "^5.2.1",
+        "@vitejs/plugin-vue-jsx": "^4.1.1",
+        "@vue/tsconfig": "^0.7.0",
+        "sass": "^1.83.4",
+        "typescript": "~5.6.2",
+        "unocss": "^65.4.3",
+        "unplugin-auto-import": "^19.0.0",
+        "unplugin-icons": "^22.0.0",
+        "unplugin-vue-components": "^28.0.0",
+        "vite": "^6.0.5",
+        "vue-tsc": "^2.2.0"
+    }
+}

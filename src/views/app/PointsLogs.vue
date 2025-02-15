@@ -1,0 +1,1 @@
+<template>Points Logs</template>

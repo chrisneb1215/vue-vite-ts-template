@@ -1,0 +1,13 @@
+{
+    "files": [],
+    "compilerOptions": {
+        "jsx": "preserve",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": null,
+        "allowJs": true
+    },
+    "references": [
+        { "path": "./tsconfig.app.json" },
+        { "path": "./tsconfig.node.json" }
+    ]
+}
