@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import Share from '@/views/Share.vue'
 
 const routes: RouteRecordRaw[] = [
+    { path: '/s/share', component: Share },
     {
         path: '/dashboard',
         name: 'Dsashboard',
