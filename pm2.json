@@ -1,8 +1,10 @@
 {
     "apps": [
         {
-            "name": "vite-ssr",
+            "name": "social-ssr",
             "script": "dist/server/server.js",
+            "watch": ["dist/server"],
+            "ignore_watch": ["node_modules"],
             "env": {
                 "NODE_ENV": "production"
             }

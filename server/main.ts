@@ -23,8 +23,8 @@ export async function render(url: string, baseUrl: string): Promise<{ appHtml: s
         return { appHtml: `<h1>SSR Error: No Component</h1>`, head: '' }
     }
 
-    const app = createSSRApp(PageComponent) // ✅ Create app with only the needed component
-    const head = createHead({}) // ✅ Meta tags support
+    const app = createSSRApp(PageComponent)
+    const head = createHead({})
 
     app.use(router)
     app.use(head)

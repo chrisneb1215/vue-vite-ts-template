@@ -8,7 +8,6 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import UnoCSS from 'unocss/vite'
-import builder from 'vite-plugin-builder'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode, isSsrBuild }) => {
@@ -17,18 +16,6 @@ export default defineConfig(({ mode, isSsrBuild }) => {
     return {
         plugins: [
             vue(),
-            // builder({
-            //     serverEntry: 'server/main.ts', // SSR Entry File
-            //     serverConfig: {
-            //         outDir: 'dist/server' // Build output for server
-            //     },
-            //     clientEntry: {
-            //         main: 'index.html'
-            //     },
-            //     clientConfig: {
-            //         outDir: 'dist/client'
-            //     }
-            // }),
             vueJsx(),
             UnoCSS(),
             AutoImport({
@@ -92,8 +79,17 @@ export default defineConfig(({ mode, isSsrBuild }) => {
             }
         },
         server: {
+            port: 8080,
             middlewareMode: true,
             proxy: {
+                '/s/': {
+                    target: 'http://localhost:3000',
+                    changeOrigin: true,
+                    rewrite: (path) => {
+                        const newPath = path.replace(/^\/s/, '')
+                        return newPath
+                    }
+                },
                 '/proxy': {
                     target: process.env.VITE_APP_API_HOST,
                     changeOrigin: true,

@@ -5,6 +5,7 @@ import { createServer as createViteServer } from 'vite'
 import fs from 'fs'
 import path from 'path'
 import { getSSRRoutePaths } from '@/router/ssrRoutes'
+import { checkIsCrawler } from './crawler'
 
 async function createServer() {
     const fastify = Fastify()
@@ -24,18 +25,19 @@ async function createServer() {
         fastify.use(vite.middlewares) // ✅ Only use Vite middleware in dev
     }
 
-    // ✅ Get the list of SSR routes (static paths like `/article`, `/dashboard`)
-    const ssrRoutes = getSSRRoutePaths()
-
-    // ✅ Convert SSR routes into regular expressions
-    const ssrRoutePatterns = ssrRoutes.map((route) => new RegExp(`^${route}(/.*)?$`))
-    console.log('✅ [Server] SSR Route Patterns:', ssrRoutePatterns)
-
     const entryServerPath = isDev ? path.resolve('server/main.ts') : path.resolve('dist/server/main.js') // ✅ Use correct entry point
 
     fastify.get('/*', async (req, reply) => {
         try {
-            const url = req.url
+            const userAgent = req.headers['user-agent'] || ''
+            const url = req.originalUrl
+            console.log(url)
+
+            const isCrawler = checkIsCrawler(userAgent)
+            if (!isCrawler) {
+                reply.status(301).redirect('viber://pa?chatURI=megabangla&context=xxxxx')
+            }
+            // const url = req.url
             const baseUrl = `${req.protocol}://${req.headers.host}`
 
             let template = fs.readFileSync(path.resolve('index.html'), 'utf-8')
@@ -47,14 +49,10 @@ async function createServer() {
             let appHtml = ''
             let headTags = ''
 
-            // ✅ Check SSR with regex
-            const isSSR = ssrRoutePatterns.some((pattern) => pattern.test(url))
-            if (isSSR) {
-                const { render } = await vite.ssrLoadModule(entryServerPath)
-                const result = await render(url, baseUrl)
-                appHtml = result.appHtml
-                headTags = result.head
-            }
+            const { render } = await vite.ssrLoadModule(entryServerPath)
+            const result = await render(url, baseUrl)
+            appHtml = result.appHtml
+            headTags = result.head
 
             // ✅ Inject OG meta tags
             template = template

@@ -26,10 +26,10 @@ useHead({
     title: articleTitle,
     meta: [
         { property: 'og:title', content: articleTitle.value },
+        { property: 'og:type', content: 'website' },
         { property: 'og:description', content: `Read more about ${articleTitle.value}` },
         { property: 'og:type', content: 'article' },
-        { property: 'og:image', content: ogImageUrl },
-        { 'http-equiv': 'refresh', content: `0; URL='/article'` }
+        { property: 'og:image', content: ogImageUrl }
     ]
 })
 </script>
